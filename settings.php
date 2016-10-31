@@ -94,4 +94,53 @@ function wpcaballu_horse_breeds() {
 }
 add_action( 'init', 'wpcaballu_horse_breeds', 0 );
 
+function horse_shortcode($atts){
+   extract(shortcode_atts(array(
+      'id' => '',
+   ), $atts));
+
+   $return_string = '<div>';
+
+   query_posts(array( 'post_type' => 'horse', 'p' => $id ));
+   if (have_posts()) :
+      while (have_posts()) : the_post();
+         $return_string .= '<h2><a href="'.get_permalink().'">'.get_the_title().'</a></h2>';
+         $return_string .= '<p>' . get_the_content() . '</p>';
+      endwhile;
+   endif;
+   $return_string .= '</div>';
+
+   wp_reset_query();
+   return $return_string;
+}
+
+function register_shortcodes(){
+   add_shortcode('horse', 'horse_shortcode');
+}
+
+add_action( 'init', 'register_shortcodes');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 endif;
