@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPCaballu' ) ) :
 		{
 
 			// Load example settings page
-	        if ( ! class_exists( 'wpcaballu_settings' ) ) {
+	        if ( ! class_exists( 'WPCaballu_settings' ) ) {
 	            require( WPCABALLU_DIR . 'settings.php');
 	        }
 

@@ -1,7 +1,9 @@
 <?php
 
+if ( ! class_exists( 'WPCaballu_settings' ) ) : 
+
 // Register Custom Post Type
-function wpcaballu_cpt() {
+function horse() {
 
 	$labels = array(
 		'name'                  => _x( 'Horses', 'Post Type General Name', 'wpcaballu' ),
@@ -35,7 +37,6 @@ function wpcaballu_cpt() {
 		'description'           => __( 'The post type where you can create your horses and it\'s genealogy', 'wpcaballu' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title', 'editor', 'thumbnail', ),
-		'taxonomies'            => array( 'wpcaballu_taxonomy' ),
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
@@ -49,10 +50,10 @@ function wpcaballu_cpt() {
 		'publicly_queryable'    => true,
 		'capability_type'       => 'post',
 	);
-	register_post_type( 'wpcaballu_cpt', $args );
+	register_post_type( 'horse', $args );
 
 }
-add_action( 'init', 'wpcaballu_cpt', 0 );
+add_action( 'init', 'horse', 0 );
 
 // Register Custom Taxonomy
 function wpcaballu_horse_breeds() {
@@ -88,7 +89,9 @@ function wpcaballu_horse_breeds() {
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
 	);
-	register_taxonomy( 'wpcaballu_taxonomy', array( 'wpcaballu_cpt' ), $args );
+	register_taxonomy( 'wpcaballu_taxonomy', array( 'horse' ), $args );
 
 }
 add_action( 'init', 'wpcaballu_horse_breeds', 0 );
+
+endif;
