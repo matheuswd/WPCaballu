@@ -115,14 +115,23 @@ function horse_shortcode($atts){
 
    $return_string = '<div>';
 
-   query_posts(array( 'post_type' => 'horse', 'p' => $id ));
-   if (have_posts()) :
-      while (have_posts()) : the_post();
+   $query = new WP_Query(array( 'post_type' => 'horse', 'p' => $id ));
+   if ($query->have_posts()) :
+      while ($query->have_posts()) : $query->the_post();
          $return_string .= '<h2><a href="'.get_permalink().'">'.get_the_title().'</a></h2>';
          $return_string .= '<p>' . get_the_content() . '</p>';
-         $return_string .= '<p>Horse name: ' . genealogy_get_meta( 'genealogy_main_horse' ) . '.</p>';
-         $return_string .= '<p>' . __( 'Father\'s name', 'wpcaballu' ) . ': ' . genealogy_get_meta( 'genealogy_father' ) . '.</p>';
-         $return_string .= '<p>Mother\'s name: ' . genealogy_get_meta( 'genealogy_mother' ) . '.</p>';
+         if ( genealogy_get_meta( 'genealogy_main_horse' ) ) {
+         	$return_string .= '<p>Horse name: ' . genealogy_get_meta( 'genealogy_main_horse' ) . '.</p>';
+         }
+
+         if ( genealogy_get_meta( 'genealogy_father' ) ) {
+         	$return_string .= '<p>' . __( 'Father\'s name', 'wpcaballu' ) . ': ' . genealogy_get_meta( 'genealogy_father' ) . '.</p>';
+         }
+         
+         if ( genealogy_get_meta( 'genealogy_mother' ) ) {
+         	$return_string .= '<p>Mother\'s name: ' . genealogy_get_meta( 'genealogy_mother' ) . '.</p>';
+         }
+         
       endwhile;
    endif;
    $return_string .= '</div>';
